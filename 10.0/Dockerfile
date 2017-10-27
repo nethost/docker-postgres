@@ -1,5 +1,5 @@
 # vim:set ft=dockerfile:
-FROM alpine:3.6
+FROM nethost/alpine:3.6
 MAINTAINER billgo <cocobill@vip.qq.com>
 
 # alpine includes "postgres" user/group in base install
