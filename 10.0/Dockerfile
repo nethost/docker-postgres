@@ -1,4 +1,5 @@
-FROM nethost/alpine:3.6
+# vim:set ft=dockerfile:
+FROM alpine:3.6
 MAINTAINER billgo <cocobill@vip.qq.com>
 
 # alpine includes "postgres" user/group in base install
@@ -19,7 +20,7 @@ RUN set -ex; \
 # alpine doesn't require explicit locale-file generation
 ENV LANG en_US.utf8
 
-RUN mkdir /docker-entrypoint-initdb.d
+RUN mkdir /initdb.d
 
 ENV PG_MAJOR 10
 ENV PG_VERSION 10.0
@@ -142,9 +143,9 @@ ENV PGDATA /var/lib/postgresql/data
 RUN mkdir -p "$PGDATA" && chown -R postgres:postgres "$PGDATA" && chmod 777 "$PGDATA" # this 777 will be replaced by 700 at runtime (allows semi-arbitrary "--user" values)
 VOLUME /var/lib/postgresql/data
 
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN ln -s usr/local/bin/docker-entrypoint.sh / # backwards compat
-ENTRYPOINT ["docker-entrypoint.sh"]
+COPY entrypoint.sh /usr/local/bin/
+RUN ln -s usr/local/bin/entrypoint.sh / # backwards compat
+ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 5432
 CMD ["postgres"]

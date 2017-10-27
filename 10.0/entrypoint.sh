@@ -122,7 +122,7 @@ if [ "$1" = 'postgres' ]; then
     psql+=( --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" )
 
     echo
-    for f in /docker-entrypoint-initdb.d/*; do
+    for f in /initdb.d/*; do
       case "$f" in
         *.sh)     echo "$0: running $f"; . "$f" ;;
         *.sql)    echo "$0: running $f"; "${psql[@]}" -f "$f"; echo ;;
